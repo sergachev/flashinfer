@@ -18,8 +18,8 @@
 
 #include "Enums.h"
 #include "TmaDescriptor.h"
-#include "trtllm/gen/CommonUtils.h"
-#include "trtllm/gen/SfLayoutDecl.h"
+#include "flashinfer/trtllm/gen/CommonUtils.h"
+#include "flashinfer/trtllm/gen/SfLayoutDecl.h"
 
 namespace gemm {
 

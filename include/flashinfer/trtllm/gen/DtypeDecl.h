@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 #ifndef TLLM_GEN_EXPORT_INTERFACE
-#include "trtllm/gen/MmaDecl.h"
+#include "flashinfer/trtllm/gen/MmaDecl.h"
 #else
 #include "MmaDecl.h"
 #endif
@@ -33,7 +33,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace batchedGemm {
+namespace gemm {
 
 namespace trtllm {
 namespace gen {
@@ -268,4 +268,8 @@ inline MmaKind dtypeGetMmaKind(Dtype dtypeA, Dtype dtypeB) {
 }  // namespace gen
 }  // namespace trtllm
 
-}  // namespace batchedGemm
+}  // namespace gemm
+
+namespace batchedGemm::trtllm::gen {
+using Dtype = ::gemm::trtllm::gen::Dtype;
+}

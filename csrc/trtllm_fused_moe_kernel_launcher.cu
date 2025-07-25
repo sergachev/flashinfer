@@ -28,10 +28,10 @@
 #include <iostream>
 #include <vector>
 
-#include "flashinfer/trtllm/batched_gemm/trtllmGen_bmm_export/trtllm/gen/DtypeDecl.h"
 #include "flashinfer/trtllm/fused_moe/DevKernel.h"
 #include "flashinfer/trtllm/fused_moe/RoutingKernel.h"
 #include "flashinfer/trtllm/fused_moe/runner.h"
+#include "flashinfer/trtllm/gen/DtypeDecl.h"
 #include "nv_internal/tensorrt_llm/thop/thUtils.h"
 
 namespace tensorrt_llm {

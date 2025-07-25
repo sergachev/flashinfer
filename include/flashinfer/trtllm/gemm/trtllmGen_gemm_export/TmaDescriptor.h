@@ -18,8 +18,8 @@
 
 #include <iostream>
 
-#include "trtllm/gen/DtypeDecl.h"
-#include "trtllm/gen/MmaDecl.h"
+#include "flashinfer/trtllm/gen/DtypeDecl.h"
+#include "flashinfer/trtllm/gen/MmaDecl.h"
 
 #ifdef TLLM_ENABLE_CUDA
 #include <cuda.h>

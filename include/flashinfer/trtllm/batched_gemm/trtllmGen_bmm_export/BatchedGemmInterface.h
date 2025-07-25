@@ -21,7 +21,7 @@
 
 #include "BatchedGemmOptions.h"
 #include "KernelParams.h"
-#include "trtllm/gen/CudaKernelLauncher.h"
+#include "flashinfer/trtllm/gen/CudaKernelLauncher.h"
 
 #ifdef TLLM_GEN_EXPORT_INTERFACE
 #include "KernelMetaInfo.h"
@@ -537,8 +537,9 @@ std::vector<size_t> BatchedGemmInterface::getWorkspaceSizesInBytes(
     auto const batchM = options.mBatchMode == BatchedGemmOptions::BatchMode::BatchM;
     if (!options.mEnablesEarlyExit || options.mNumTokens == 0) {
       for (int32_t bi = 0; bi < options.mNumBatches; ++bi) {
-        totalNumPaddedTokens += batchM ? gemm::divUpMul(options.mBatchedM[bi], options.mTileM)
-                                       : gemm::divUpMul(options.mBatchedN[bi], options.mTileN);
+        totalNumPaddedTokens += batchM
+                                    ? ::gemm::gemm::divUpMul(options.mBatchedM[bi], options.mTileM)
+                                    : ::gemm::gemm::divUpMul(options.mBatchedN[bi], options.mTileN);
       }
     } else {
       // Get tile in token dim.
@@ -603,8 +604,8 @@ int32_t BatchedGemmInterface::run(BatchedGemmConfig const& config, void* workspa
   int32_t numCtaXy{0};
   if (options.mIsStaticBatch) {
     for (int32_t bi = 0; bi < options.mNumBatches; ++bi) {
-      numCtaXy += batchM ? gemm::divUp(options.mBatchedM[bi], options.mTileM)
-                         : gemm::divUp(options.mBatchedN[bi], options.mTileN);
+      numCtaXy += batchM ? ::gemm::gemm::divUp(options.mBatchedM[bi], options.mTileM)
+                         : ::gemm::gemm::divUp(options.mBatchedN[bi], options.mTileN);
     }
   }
 
@@ -618,8 +619,10 @@ int32_t BatchedGemmInterface::run(BatchedGemmConfig const& config, void* workspa
     maxNumCtasInBatchDim = batchedGemmData.mProblemDimensions.mMaxNumCtasInTokenDim;
   }
 
-  auto const numCtaX = batchM ? maxNumCtasInBatchDim : gemm::divUp(options.mM, options.mTileM);
-  auto const numCtaY = batchM ? gemm::divUp(options.mN, options.mTileN) : maxNumCtasInBatchDim;
+  auto const numCtaX =
+      batchM ? maxNumCtasInBatchDim : ::gemm::gemm::divUp(options.mM, options.mTileM);
+  auto const numCtaY =
+      batchM ? ::gemm::gemm::divUp(options.mN, options.mTileN) : maxNumCtasInBatchDim;
   auto const numCtaZ = options.mNumSlicesForSplitK;
   mNumCtas = numCtaX * numCtaY * numCtaZ;
 
@@ -698,7 +701,7 @@ int32_t BatchedGemmInterface::run(BatchedGemmConfig const& config, void* workspa
                 static_cast<uint32_t>(options.mClusterDimZ)};
 
   // Run the kernel.
-  auto result = trtllm::gen::launchKernel(
+  auto result = ::gemm::trtllm::gen::launchKernel(
       (void*)&kernelParams, cudaStream, config.mSharedMemSize, cuFunction, block3, grid3, cluster3,
       usePdl && (config.mOptions.mGridWaitForPrimaryEarlyExit |
                  config.mOptions.mGridWaitForPrimaryA | config.mOptions.mGridWaitForPrimaryB));

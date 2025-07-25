@@ -21,7 +21,7 @@
 
 #include "GemmOptions.h"
 #include "KernelParams.h"
-#include "trtllm/gen/CudaKernelLauncher.h"
+#include "flashinfer/trtllm/gen/CudaKernelLauncher.h"
 
 #ifdef TLLM_GEN_EXPORT_INTERFACE
 #include "KernelMetaInfo.h"

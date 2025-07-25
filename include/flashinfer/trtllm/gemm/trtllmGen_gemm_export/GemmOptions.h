@@ -22,12 +22,12 @@
 #include "Enums.h"
 #include "KernelParams.h"
 #include "KernelTraits.h"
-#include "trtllm/gen/DtypeDecl.h"
-#include "trtllm/gen/MmaDecl.h"
-#include "trtllm/gen/SfLayoutDecl.h"
+#include "flashinfer/trtllm/gen/DtypeDecl.h"
+#include "flashinfer/trtllm/gen/MmaDecl.h"
+#include "flashinfer/trtllm/gen/SfLayoutDecl.h"
 #ifndef TLLM_GEN_EXPORT_INTERFACE
-#include "trtllm/gen/CudaRunner.h"
-#include "trtllm/gen/GenCtx.h"
+#include "flashinfer/trtllm/gen/CudaRunner.h"
+#include "flashinfer/trtllm/gen/GenCtx.h"
 #else
 #include <iostream>
 
@@ -1200,3 +1200,8 @@ inline bool checkAndUpdateGemmOptions(GemmOptions& options, bool isBlackwell, in
 #endif  // TLLM_GEN_EXPORT_INTERFACE
 
 }  // namespace gemm
+
+namespace batchedGemm::gemm {
+using GemmOptions = ::gemm::gemm::GemmOptions;
+using SmVersion = ::gemm::gemm::SmVersion;
+}  // namespace batchedGemm::gemm

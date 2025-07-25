@@ -23,8 +23,8 @@
 #include "GemmOptions.h"
 
 #ifndef TLLM_GEN_EXPORT_INTERFACE
-#include "trtllm/gen/CudaRunner.h"
-#include "trtllm/gen/GenCtx.h"
+#include "flashinfer/trtllm/gen/CudaRunner.h"
+#include "flashinfer/trtllm/gen/GenCtx.h"
 #else
 #include <iostream>
 
@@ -56,7 +56,7 @@ namespace batchedGemm {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace tg = trtllm::gen;
+namespace tg = ::gemm::trtllm::gen;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -163,8 +163,8 @@ bool checkAndUpdateBatchedGemmOptions(BatchedGemmOptions& options, bool isBlackw
     // ensure that we check the fused options as well
     isValid = gemmGatedAct::checkAndUpdateGemmGatedActOptions(options, isBlackwell, updateOptions);
   } else {
-    isValid =
-        gemm::checkAndUpdateGemmOptions(options, isBlackwell, 1 /* tpGrpSize */, updateOptions);
+    isValid = ::gemm::gemm::checkAndUpdateGemmOptions(options, isBlackwell, 1 /* tpGrpSize */,
+                                                      updateOptions);
   }
 
   bool batchM = options.mBatchMode == BatchedGemmOptions::BatchMode::BatchM;
@@ -274,10 +274,10 @@ bool checkAndUpdateBatchedGemmOptions(BatchedGemmOptions& options, bool isBlackw
     }
   }
 
-  if (!gemm::isBiasTypeNone(options.mBiasType)) {
-    TLLM_CHECK_ERROR((gemm::isBiasTypeN(options.mBiasType) &&
+  if (!::gemm::gemm::isBiasTypeNone(options.mBiasType)) {
+    TLLM_CHECK_ERROR((::gemm::gemm::isBiasTypeN(options.mBiasType) &&
                       options.mBatchMode == BatchedGemmOptions::BatchMode::BatchM) ||
-                         (gemm::isBiasTypeM(options.mBiasType) &&
+                         (::gemm::gemm::isBiasTypeM(options.mBiasType) &&
                           options.mBatchMode == BatchedGemmOptions::BatchMode::BatchN),
                      "BatchedGemm supports only per channel bias.");
   }
