@@ -126,3 +126,11 @@ BIAS_TYPE_FUNCTION(Mn)
 }  // namespace gemm
 
 }  // namespace gemm
+
+namespace batchedGemm::gemm {
+using AllReduceAlgo = ::gemm::gemm::AllReduceAlgo;
+using MatrixLayout = ::gemm::gemm::MatrixLayout;
+using SplitK = ::gemm::gemm::SplitK;
+using BiasType = ::gemm::gemm::BiasType;
+using TileScheduler = ::gemm::gemm::TileScheduler;
+}  // namespace batchedGemm::gemm

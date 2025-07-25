@@ -17,11 +17,11 @@
 #include <iostream>
 
 #include "flashinfer/trtllm/batched_gemm/KernelRunner.h"
-#include "flashinfer/trtllm/batched_gemm/trtllmGen_bmm_export/trtllm/gen/DtypeDecl.h"
-#include "flashinfer/trtllm/batched_gemm/trtllmGen_bmm_export/trtllm/gen/SfLayoutDecl.h"
 #include "flashinfer/trtllm/fused_moe/DevKernel.h"
 #include "flashinfer/trtllm/fused_moe/RoutingKernel.h"
 #include "flashinfer/trtllm/fused_moe/runner.h"
+#include "flashinfer/trtllm/gen/DtypeDecl.h"
+#include "flashinfer/trtllm/gen/SfLayoutDecl.h"
 // #include <tensorrt_llm/common/assert.h>
 
 namespace tensorrt_llm {

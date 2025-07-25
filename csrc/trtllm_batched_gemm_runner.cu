@@ -22,8 +22,8 @@
 // #include "tensorrt_llm/common/assert.h"
 #include "flashinfer/trtllm/batched_gemm/trtllmGen_bmm_export/BatchedGemmInterface.h"
 #include "flashinfer/trtllm/batched_gemm/trtllmGen_bmm_export/Enums.h"
-#include "flashinfer/trtllm/batched_gemm/trtllmGen_bmm_export/trtllm/gen/DtypeDecl.h"
 #include "flashinfer/trtllm/common.h"
+#include "flashinfer/trtllm/gen/DtypeDecl.h"
 
 namespace tensorrt_llm {
 namespace kernels {
@@ -321,8 +321,8 @@ std::vector<int64_t> TrtllmGenBatchedGemmRunner::getValidConfigIndices(
     if (optionsA.mTileK == optionsB.mTileK &&
         optionsA.mUseUnrollLoop2xForMma == optionsB.mUseUnrollLoop2xForMma &&
         optionsA.mTileM == optionsB.mTileM) {
-      int64_t numTilesM = batchedGemm::gemm::divUp(sizeM, optionsA.mTileM);
-      int64_t numTilesN = batchedGemm::gemm::divUp(sizeN, optionsA.mTileN);
+      int64_t numTilesM = gemm::gemm::divUp(sizeM, optionsA.mTileM);
+      int64_t numTilesN = gemm::gemm::divUp(sizeN, optionsA.mTileN);
       if (numTilesM * numTilesN > 148) {
         return optionsA.mTileScheduler == TileScheduler::Persistent;
       }

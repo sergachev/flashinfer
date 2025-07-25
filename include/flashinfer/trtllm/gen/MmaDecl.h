@@ -16,7 +16,7 @@
  */
 #pragma once
 
-namespace batchedGemm {
+namespace gemm {
 
 namespace trtllm {
 namespace gen {
@@ -89,4 +89,8 @@ inline std::string mmaKindToString(MmaKind mmaKind) {
 }  // namespace gen
 }  // namespace trtllm
 
-}  // namespace batchedGemm
+}  // namespace gemm
+
+namespace batchedGemm::trtllm::gen {
+using MmaKind = ::gemm::trtllm::gen::MmaKind;
+}

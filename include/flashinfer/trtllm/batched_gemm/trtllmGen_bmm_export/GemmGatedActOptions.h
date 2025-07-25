@@ -49,7 +49,7 @@ namespace gemmGatedAct {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace tg = trtllm::gen;
+namespace tg = ::gemm::trtllm::gen;
 
 // Type of the gated activation
 enum class ActType {
@@ -131,8 +131,8 @@ inline bool checkAndUpdateGemmGatedActOptions(gemmGatedAct::GemmGatedActOptions&
                      ") must be a multiple of ", hiddenGranularity, " for block-scaled outputs.");
   }
 
-  auto isValid = gemm::checkAndUpdateGemmOptions(options, isBlackwell,
-                                                 /* tpGrpSize */ 1, updateOptions);
+  auto isValid = ::gemm::gemm::checkAndUpdateGemmOptions(options, isBlackwell,
+                                                         /* tpGrpSize */ 1, updateOptions);
 
   if (!isValid) {
     return false;
@@ -143,7 +143,7 @@ inline bool checkAndUpdateGemmGatedActOptions(gemmGatedAct::GemmGatedActOptions&
                      "Split-k GMEM and GemmGatedAct are not supported yet.");
   }
 
-  if (gemm::isBiasTypeMn(options.mBiasType)) {
+  if (::gemm::gemm::isBiasTypeMn(options.mBiasType)) {
     TLLM_CHECK_ERROR(options.mTransposeMmaOutput,
                      "Bias type Mn is not supported with not transpose mma output.");
   }
@@ -155,7 +155,7 @@ inline bool checkAndUpdateGemmGatedActOptions(gemmGatedAct::GemmGatedActOptions&
 
 inline std::string dumpOptions(GemmGatedActOptions const& options) {
   std::stringstream ss;
-  ss << gemm::dumpOptions(options) << ", ";
+  ss << ::gemm::gemm::dumpOptions(options) << ", ";
   ss << "mActType=" << "gemmGatedAct::ActType(" << static_cast<int32_t>(options.mActType) << ")"
      << std::endl;
   return ss.str();

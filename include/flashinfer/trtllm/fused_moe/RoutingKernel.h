@@ -20,8 +20,8 @@
 #include <cuda_runtime_api.h>
 
 #include "IntFastDiv.h"
-#include "flashinfer/trtllm/batched_gemm/trtllmGen_bmm_export/trtllm/gen/DtypeDecl.h"
 #include "flashinfer/trtllm/common/cudaUtils.h"
+#include "flashinfer/trtllm/gen/DtypeDecl.h"
 
 namespace moe::dev {
 
@@ -31,7 +31,7 @@ namespace routing {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-namespace tg = batchedGemm::trtllm::gen;
+namespace tg = ::gemm::trtllm::gen;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
