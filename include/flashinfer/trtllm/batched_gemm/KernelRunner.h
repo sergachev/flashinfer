@@ -23,7 +23,7 @@
 #include <vector>
 
 // #include "flashinfer/trtllm/common/Dtype.h"
-#include "trtllmGen_bmm_export/trtllm/gen/DtypeDecl.h"
+#include "flashinfer/trtllm/gen/DtypeDecl.h"
 
 namespace tensorrt_llm {
 namespace kernels {

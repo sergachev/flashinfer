@@ -22,8 +22,8 @@
 #include <string>
 
 #include "flashinfer/trtllm/batched_gemm/KernelRunner.h"
-#include "flashinfer/trtllm/batched_gemm/trtllmGen_bmm_export/trtllm/gen/DtypeDecl.h"
 #include "flashinfer/trtllm/common/cudaUtils.h"
+#include "flashinfer/trtllm/gen/DtypeDecl.h"
 
 namespace tensorrt_llm {
 namespace kernels {

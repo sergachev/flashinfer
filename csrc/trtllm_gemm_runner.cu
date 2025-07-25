@@ -21,7 +21,7 @@
 #include "flashinfer/trtllm/common.h"
 #include "flashinfer/trtllm/gemm/trtllmGen_gemm_export/Enums.h"
 #include "flashinfer/trtllm/gemm/trtllmGen_gemm_export/GemmInterface.h"
-#include "flashinfer/trtllm/gemm/trtllmGen_gemm_export/trtllm/gen/DtypeDecl.h"
+#include "flashinfer/trtllm/gen/DtypeDecl.h"
 #include "pytorch_extension_utils.h"
 
 namespace flashinfer {

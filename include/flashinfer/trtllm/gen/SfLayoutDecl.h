@@ -94,3 +94,7 @@ inline std::string sfLayoutToString(SfLayout layout) {
 }  // namespace trtllm
 
 }  // namespace gemm
+
+namespace batchedGemm::trtllm::gen {
+using SfLayout = ::gemm::trtllm::gen::SfLayout;
+}
